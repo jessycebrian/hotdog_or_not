@@ -1,6 +1,6 @@
 # Local imports
 import datetime
-
+from typing import Optional
 # Third party imports
 from pydantic import BaseModel, Field
 
@@ -8,27 +8,27 @@ from ms import app
 from ms.functions import get_model_response
 
 
-model_name = "Breast Cancer Wisconsin (Diagnostic)"
+model_name = "Hotdog Recognition Model (2024)"
 version = "v1.0.0"
 
 
-# Input for data validation
+# # Input for data validation
 class Input(BaseModel):
-    concavity_mean: float = Field(..., gt=0)
-    concave_points_mean: float = Field(..., gt=0)
-    perimeter_se: float = Field(..., gt=0)
-    area_se: float = Field(..., gt=0)
-    texture_worst: float = Field(..., gt=0)
-    area_worst: float = Field(..., gt=0)
+    image: float = Field(..., gt=0)
+    # concave_points_mean: float = Field(..., gt=0)
+    # perimeter_se: float = Field(..., gt=0)
+    # area_se: float = Field(..., gt=0)
+    # texture_worst: float = Field(..., gt=0)
+    # area_worst: float = Field(..., gt=0)
 
     class Config:
         schema_extra = {
-            "concavity_mean": 0.3001,
-            "concave_points_mean": 0.1471,
-            "perimeter_se": 8.589,
-            "area_se": 153.4,
-            "texture_worst": 17.33,
-            "area_worst": 2019.0,
+            "image": 0.3001,
+            # "concave_points_mean": 0.1471,
+            # "perimeter_se": 8.589,
+            # "area_se": 153.4,
+            # "texture_worst": 17.33,
+            # "area_worst": 2019.0,
         }
 
 
@@ -55,8 +55,8 @@ async def service_health():
     }
 
 
-@app.post('/predict', response_model=Output)
-async def model_predict(input: Input):
+@app.post('/predict', response_model=Output) # Change to post method when input data
+async def model_predict(input: Optional[Input] = None):
     """Predict with input"""
     response = get_model_response(input)
     return response

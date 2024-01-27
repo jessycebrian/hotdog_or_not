@@ -7,7 +7,6 @@ WORKDIR /app
 # Copy files
 COPY main.py /app
 COPY requirements.txt /app
-COPY model /app/model
 COPY ms /app/ms
 
 # Install dependencies

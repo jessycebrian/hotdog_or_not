@@ -4,38 +4,27 @@ from typing import Optional
 # Third party imports
 from pydantic import BaseModel, Field
 
-from ms import app
-from ms.functions import get_model_response
+from ms import app,model,processor
+from ms.functions import predict_label_and_probabilities
+from fastapi import FastAPI, File, UploadFile
+
+from PIL import Image
+import io
+
+model_name = "Hotdog Recognition Model (CLIP) (2024)"
+version = "v2.0.0"
 
 
-model_name = "Hotdog Recognition Model (2024)"
-version = "v1.0.0"
-
-
-# # Input for data validation
+# Input for data validation
+# Not used
 class Input(BaseModel):
-    image: float = Field(..., gt=0)
-    # concave_points_mean: float = Field(..., gt=0)
-    # perimeter_se: float = Field(..., gt=0)
-    # area_se: float = Field(..., gt=0)
-    # texture_worst: float = Field(..., gt=0)
-    # area_worst: float = Field(..., gt=0)
-
-    class Config:
-        schema_extra = {
-            "image": 0.3001,
-            # "concave_points_mean": 0.1471,
-            # "perimeter_se": 8.589,
-            # "area_se": 153.4,
-            # "texture_worst": 17.33,
-            # "area_worst": 2019.0,
-        }
+    file: UploadFile
 
 
-# Ouput for data validation
+# Output for data validation
 class Output(BaseModel):
     label: str
-    prediction: int
+    prediction: float
 
 
 @app.get('/')
@@ -56,7 +45,17 @@ async def service_health():
 
 
 @app.post('/predict', response_model=Output) # Change to post method when input data
-async def model_predict(input: Optional[Input] = None):
+async def model_predict(file: UploadFile = File(...)):
     """Predict with input"""
-    response = get_model_response(input)
-    return response
+    """Predict with input image"""
+    contents = await file.read()
+    image = Image.open(io.BytesIO(contents))
+
+    inputs = processor(text=["a photo of a hotdog", "a photo of something else"], images=image, return_tensors="pt", padding=True)
+
+    outputs = model(**inputs)
+    result = predict_label_and_probabilities(outputs)
+
+
+    return result
+

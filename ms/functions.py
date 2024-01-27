@@ -1,23 +1,12 @@
-import pandas as pd
-from ms import hotdog_model
+from torch import Tensor
 
 
-def predict(hotdog_model):
-    prediction = hotdog_model.predict()
-    return prediction
 
+def predict_label_and_probabilities(outputs: Tensor, threshold: float = 0.6):
+    logits_per_image = outputs.logits_per_image
+    probs = logits_per_image.softmax(dim=1)
 
-def get_model_response(input = None):
-    if input:
-        X = pd.json_normalize(input.__dict__) # uncomment this if input is json from curl
-    prediction = predict(hotdog_model)
-    if prediction == 1:
-        # label = "M"
-        label = "Hotdog"
-    else:
-        # label = "B"
-        label = "Not Hotdog"
-    return {
-        'label': label,
-        'prediction': int(prediction)
-    }
+    label = "hotdog" if float(probs[0][0]) > threshold else "not a hotdog"
+    prediction = float(probs[0][0]) if label == "hotdog" else float(probs[0][1])
+
+    return {"label": label, "prediction": prediction}

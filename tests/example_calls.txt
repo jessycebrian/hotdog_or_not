@@ -5,9 +5,4 @@ curl -XGET http://localhost:8000/info
 # GET method health
 curl -XGET http://localhost:8000/health
 
-# POST method predict hotdog or not hotdog
-curl -X POST http://0.0.0.0:8000/predict without input
-
-curl -d '{"image": 0.3001}' \
-     -H "Content-Type: application/json" \
-     -XPOST http://0.0.0.0:8000/predict
+# POST using image_request.py file

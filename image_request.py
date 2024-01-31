@@ -5,7 +5,7 @@ url = "http://127.0.0.1:8000/predict"
 
 # Path to the image file
 file_path = "hotdog_test.jpg"
-file_path = "CLIP.png"
+# file_path = "CLIP.png"
 
 # Open the image file
 with open(file_path, "rb") as file:

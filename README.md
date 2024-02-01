@@ -1,5 +1,5 @@
-# CLIP + FastAPI + Docker
-Deployment of CLIP model FastAPI + Docker
+# CLIP + FastAPI + Streamlit
+Deployment of CLIP model FastAPI + Docker + Streamlit to recognise hotdog pictures.
 
 
 # Virtual Environment
@@ -42,6 +42,11 @@ And now we can test our application using Docker
 
 Test by using the calls in tests/example_calls.txt from the terminal
 
-or run 
-
+or run in terminal
+`$ cd tests`
 `$ python image_request.py`
+
+# Run Streamlit app
+
+`$ streamlit run hotdog_app.py`
+and upload a picture to get a prediction.

@@ -11,10 +11,10 @@ processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 print("loaded model")
 print("reading image")
 
-file_path = "hotdog_test.jpg"
+file_path = "hotdog_or_leg.jpeg"
 image = Image.open(file_path)
 
-inputs = processor(text=["a photo of a hotdog",  "a photo of something else"], images=image, return_tensors="pt", padding=True)
+inputs = processor(text=["a photo of a hotdog", "photo of legs","a photo of something else"], images=image, return_tensors="pt", padding=True)
 
 print("predicting")
 
@@ -26,4 +26,5 @@ if float(probs[0][0]) > 0.6:
 else:
   output= "The image is not a hotdog"
 
+print(probs)
 print(output)

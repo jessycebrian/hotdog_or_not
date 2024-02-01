@@ -1,12 +1,12 @@
 import requests
 
 # URL of the FastAPI endpoint
-url = "http://127.0.0.1:8000/predict"
+url = "http://127.0.0.1:8000/predict_streamlit"
 
 # Path to the image file
-file_path = "hotdog_test.jpg"
+# file_path = "hotdog_test.jpg"
 # file_path = "CLIP.png"
-
+file_path = "hotdog_or_leg.jpeg"
 # Open the image file
 with open(file_path, "rb") as file:
     # Create a dictionary containing the file object

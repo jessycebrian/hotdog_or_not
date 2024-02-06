@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Copy files
 COPY main.py /app
+COPY hotdog_app.py /app
 COPY requirements.txt /app
 COPY ms /app/ms
 

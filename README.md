@@ -50,3 +50,15 @@ or run in terminal
 
 `$ streamlit run hotdog_app.py`
 and upload a picture to get a prediction.
+
+
+# Evaluate clip model
+
+## Download images 
+To download images for testing there is a python script that allows us to search for a query and obtain images. It can be used from the terminal. 
+
+`$ python get_test_images.py --query "{}" --max_images {}`
+
+## Run evaluation 
+
+`$ python clip_hotdog_evaluation.py`

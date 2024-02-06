@@ -9,7 +9,7 @@ def predict(image_bytes):
     image_file = io.BytesIO(image_bytes)
     
     files = {'file': image_file}
-    response = requests.post('http://localhost:8000/predict_streamlit', files=files)
+    response = requests.post('http://localhost:8000/predict', files=files)
     if response.status_code == 200:
         result = response.json()
         return result

@@ -61,19 +61,3 @@ async def model_predict(file: UploadFile = File(...)):
 
 
     return result
-
-
-@app.post("/predict_streamlit",response_model=Output)
-async def model_predict(file: UploadFile = File(...)):
-        # Open the image from bytes
-    image = Image.open(io.BytesIO(await file.read()))    
-
-    print("read Image")
-    inputs = processor(text=["a photo of a hotdog","photo of legs", "a photo of something else"], images=image, return_tensors="pt", padding=True)
-
-    outputs = model(**inputs)
-    result = predict_label_and_probabilities(outputs)
-        
-    # Return the prediction result
-    return result
-    

@@ -54,7 +54,7 @@ async def model_predict(file: UploadFile = File(...)):
     contents = await file.read()
     image = Image.open(io.BytesIO(contents))
 
-    inputs = processor(text=["a photo of a hotdog", "a photo of something else"], images=image, return_tensors="pt", padding=True)
+    inputs = processor(text=["a photo of a hotdog", "photo of legs", "a photo of something else"], images=image, return_tensors="pt", padding=True)
 
     outputs = model(**inputs)
     result = predict_label_and_probabilities(outputs)

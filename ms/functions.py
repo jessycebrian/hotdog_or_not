@@ -1,6 +1,6 @@
 from torch import Tensor
 import torch
-
+import numpy as np
 
 def predict_label_and_probabilities(outputs: Tensor, threshold: float = 0.6):
     logits_per_image = outputs.logits_per_image
@@ -15,9 +15,9 @@ def predict_label_and_probabilities(outputs: Tensor, threshold: float = 0.6):
         prediction = max_prob
     elif max_class == "hotdog" and max_prob < 0.6:
         label =  "not a hotdog"
-        prediction =  1 - max_prob
+        prediction = probs.sum() - max_prob
     else:
         label = "not a hotdog"
-        prediction = max_prob
+        prediction = probs[:, 1:].sum()
 
     return {"label": label, "prediction": prediction.item()}

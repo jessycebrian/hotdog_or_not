@@ -36,7 +36,7 @@ def predict_clip(image_bytes):
 
 # Streamlit app
 def main():
-    st.title("Hotdog Or Not: Hotdog Recognition App")
+    st.title("HotNot: Hotdog Recognition App")
 
     # File upload widget
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])

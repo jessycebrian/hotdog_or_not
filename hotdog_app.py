@@ -26,9 +26,11 @@ def predict_clip(image_bytes):
     image_file = io.BytesIO(image_bytes)
     contents = image_file.read()
     image = Image.open(io.BytesIO(contents))
+    # Generate input 
     inputs = processor(text=["a photo of a hotdog", "photo of legs", "a photo of something else"], images=image, return_tensors="pt", padding=True)
-
+    # Predict input classes
     outputs = model(**inputs)
+    # Process outputs from NN
     result = predict_label_and_probabilities(outputs)
     return result
     

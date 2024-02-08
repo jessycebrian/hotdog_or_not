@@ -1,8 +1,0 @@
-
-# GET method info
-curl -XGET http://localhost:8000/info
-
-# GET method health
-curl -XGET http://localhost:8000/health
-
-# POST using image_request.py file

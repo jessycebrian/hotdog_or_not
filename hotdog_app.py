@@ -1,24 +1,9 @@
 import streamlit as st
-import requests
 from PIL import Image
 import io
 from ms import processor,model
 from ms.functions import predict_label_and_probabilities
-from fastapi import FastAPI, File, UploadFile
 
-
-# Function to make a prediction request to the FastAPI service
-def predict(image_bytes):
-    # Wrap the byte data into a file-like object
-    image_file = io.BytesIO(image_bytes)
-    
-    files = {'file': image_file}
-    response = requests.post('http://localhost:8000/predict', files=files)
-    if response.status_code == 200:
-        result = response.json()
-        return result
-    else:
-        return {'label': 'Error', 'prediction': 'Error'}
 
 # Function to make a prediction request to the FastAPI service
 def predict_clip(image_bytes):
@@ -27,7 +12,7 @@ def predict_clip(image_bytes):
     contents = image_file.read()
     image = Image.open(io.BytesIO(contents))
     # Generate input 
-    inputs = processor(text=["a photo of a hotdog", "photo of legs", "a photo of something else"], images=image, return_tensors="pt", padding=True)
+    inputs = processor(text=["a photo of a hotdog","photo of a finger", "photo of legs", "a photo of something else"], images=image, return_tensors="pt", padding=True)
     # Predict input classes
     outputs = model(**inputs)
     # Process outputs from NN
@@ -38,7 +23,7 @@ def predict_clip(image_bytes):
 
 # Streamlit app
 def main():
-    st.title("HotNot: Hotdog Recognition App")
+    st.title("HotNot🌭: Hotdog Recognition App")
 
     # File upload widget
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])

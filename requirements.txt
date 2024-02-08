@@ -36,7 +36,6 @@ dill==0.3.7
 exceptiongroup==1.2.0
 executing==2.0.1
 fastai==2.7.14
-fastapi==0.109.0
 fastbook==0.0.29
 fastcore==1.5.29
 fastdownload==0.0.7

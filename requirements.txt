@@ -36,7 +36,6 @@ dill==0.3.7
 exceptiongroup==1.2.0
 executing==2.0.1
 fastai==2.7.14
-fastbook==0.0.29
 fastcore==1.5.29
 fastdownload==0.0.7
 fastjsonschema==2.19.1
@@ -150,7 +149,7 @@ spacy-loggers==1.0.5
 srsly==2.4.8
 stack-data==0.6.3
 starlette==0.35.1
-streamlit==1.30.0
+streamlit==1.31.0
 sympy==1.12
 tenacity==8.2.3
 terminado==0.18.0

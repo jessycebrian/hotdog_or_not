@@ -2,6 +2,10 @@ import streamlit as st
 import requests
 from PIL import Image
 import io
+from ms import processor,model
+from ms.functions import predict_label_and_probabilities
+from fastapi import FastAPI, File, UploadFile
+
 
 # Function to make a prediction request to the FastAPI service
 def predict(image_bytes):
@@ -15,6 +19,19 @@ def predict(image_bytes):
         return result
     else:
         return {'label': 'Error', 'prediction': 'Error'}
+
+# Function to make a prediction request to the FastAPI service
+def predict_clip(image_bytes):
+    # Wrap the byte data into a file-like object
+    image_file = io.BytesIO(image_bytes)
+    contents = image_file.read()
+    image = Image.open(io.BytesIO(contents))
+    inputs = processor(text=["a photo of a hotdog", "photo of legs", "a photo of something else"], images=image, return_tensors="pt", padding=True)
+
+    outputs = model(**inputs)
+    result = predict_label_and_probabilities(outputs)
+    return result
+    
     
 
 # Streamlit app
@@ -33,7 +50,7 @@ def main():
         # Check if user clicks the predict button
         if st.button('Predict'):
             # Make prediction request
-            result = predict(image_bytes)
+            result = predict_clip(image_bytes)
             # Display prediction result
             st.write("Label:", result['label'])
             st.write("Prediction:", result['prediction'])

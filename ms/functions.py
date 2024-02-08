@@ -20,4 +20,4 @@ def predict_label_and_probabilities(outputs: Tensor, threshold: float = 0.6):
         label = "not a hotdog"
         prediction = max_prob
 
-    return {"label": label, "prediction": prediction}
+    return {"label": label, "prediction": prediction.item()}
